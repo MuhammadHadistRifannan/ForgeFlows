@@ -69,9 +69,10 @@ jobs:
           script: |
 
 
-            cd /home/forge-flows
+            cd /home/project/ForgeFlows
             
             git pull origin main
+
             docker compose build
             docker compose up -d
 
