@@ -70,11 +70,8 @@ jobs:
 
 
             cd /home/forge-flows
-
-
+            
             docker compose pull
-
-
             docker compose up -d
 
             docker compose exec app php artisan migrate --force

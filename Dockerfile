@@ -65,8 +65,6 @@ RUN docker-php-ext-install \
     opcache \
     pcntl
 
-RUN pecl install redis \
-    && docker-php-ext-enable redis
 
 COPY --from=composer /app .
 COPY --from=node /app/public/build public/build
