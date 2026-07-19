@@ -33,8 +33,11 @@ jobs:
 
         run: |
 
+          docker login -u ${{secrets.DOCKER_USERNAME}} --pasword-stdin ${{secrets.DOCKER_ACCESS_TOKEN}}
           docker build \
-          -t laravel-app:test .
+          -t forge-flows:v1 .
+          docker push forge-flows:v1 
+          
 
 
 
@@ -73,7 +76,7 @@ jobs:
             
             git pull origin main
 
-            docker compose build
+            docker compose pull
             docker compose up -d
 
             docker compose exec app php artisan migrate --force
