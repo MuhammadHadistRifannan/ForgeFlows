@@ -90,7 +90,8 @@ jobs:
 
             docker compose exec nginx nginx -t 
 
-            if ! grep -q "APP_KEY=base64:" .env then
+            if ! grep -q "^APP_KEY=base64:" .env
+            then
               docker compose exec app php artisan key:generate --force
             fi
 
