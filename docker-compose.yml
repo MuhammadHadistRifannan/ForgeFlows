@@ -1,9 +1,9 @@
 services:
 
   app:
-    build: .
+    image: bennedistus/forge-flows:v1
 
-    container_name: bennedistus/forge-flows:v1
+    container_name: forge_flows_app
 
     restart: unless-stopped
 
