@@ -81,7 +81,10 @@ jobs:
             docker compose pull
             docker compose up -d
 
-            sleep 8
+            docker image prune -af 
+            docker builder prune -af 
+
+            sleep 4
 
             docker compose exec nginx nginx -t 
 
