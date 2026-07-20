@@ -67,7 +67,7 @@ jobs:
 
           key: ${{ secrets.VPS_SECRET }}
 
-
+          
 
           script: |
 
@@ -76,6 +76,8 @@ jobs:
             
             
             git pull origin main
+
+            cp .env.example >> .env
             
             docker compose down -v
             docker compose pull
