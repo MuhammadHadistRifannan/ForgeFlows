@@ -5,7 +5,7 @@ services:
 
     container_name: forge_flows_app
     volumes:
-      - ./:/app
+      - ./:/var/www/html
 
     restart: unless-stopped
 
