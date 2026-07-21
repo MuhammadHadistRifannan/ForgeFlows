@@ -91,6 +91,8 @@ jobs:
             docker compose exec nginx nginx -t 
             docker compose exec app composer install
 
+            docker compose exec app chown -R www-data:www-data storage/framework/views/
+
             if ! grep -q "^APP_KEY=base64:" .env
             then
               docker compose exec app php artisan key:generate --force
