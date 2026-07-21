@@ -1,78 +1,27 @@
-################################################
-# Composer
-################################################
-
-FROM composer:2 AS composer
-
+FROM php:8.2-fpm
 WORKDIR /app
-
-COPY composer.json composer.lock ./
-
-RUN composer install \
-    --no-dev \
-    --prefer-dist \
-    --no-interaction \
-    --no-scripts \
-    --optimize-autoloader
-
 COPY . .
 
-RUN composer dump-autoload \
-    --optimize \
-    --classmap-authoritative
+COPY composer*.json .
+COPY composer*.lock .
 
-################################################
-# Node Build
-################################################
+RUN apt-get update && apt-get install -y openssl \
+    php-bcmath \
+    php-curl    \ 
+    php-json \
+    php-mbstring \
+    php-mysql \
+    php-tokenizer \ 
+    php-xml\
+    php-zip \
+    docker-php-ext-install \
+    git \
+    unzip \ 
+    libzip-dev 
 
-FROM node:22-alpine AS node
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-WORKDIR /app
-
-COPY package*.json ./
-
-RUN npm ci
-
-COPY . .
-
-RUN npm run build
-
-################################################
-# Production
-################################################
-
-FROM php:8.4-fpm-alpine
-
-WORKDIR /var/www/html
-
-RUN apk add --no-cache \
-    libzip-dev \
-    icu-dev \
-    libpng-dev \
-    jpeg-dev \
-    freetype-dev
-
-RUN docker-php-ext-configure gd \
-    --with-freetype \
-    --with-jpeg
-
-RUN docker-php-ext-install \
-    pdo_mysql \
-    bcmath \
-    intl \
-    zip \
-    gd \
-    opcache \
-    pcntl
-
-
-COPY --from=composer /app .
-COPY --from=node /app/public/build public/build
-
-RUN chown -R www-data:www-data \
-    storage \
-    bootstrap/cache
-
+RUN composer install
 
 EXPOSE 9000
-CMD ["php-fpm"]
+CMD [ "php-fpm" ]
