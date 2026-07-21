@@ -6,7 +6,6 @@ COPY composer*.json .
 COPY composer*.lock .
 
 RUN apt-get update && apt-get install -y openssl \
-    docker-php-ext-install \
     git \
     unzip \ 
     libzip-dev 
