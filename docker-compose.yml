@@ -9,6 +9,9 @@ services:
 
     restart: unless-stopped
 
+    expose:
+      - 9000
+
   nginx:
 
     image: nginx:stable-alpine

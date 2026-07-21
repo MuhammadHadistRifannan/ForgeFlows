@@ -1,42 +1,23 @@
 FROM php:8.2-fpm
-WORKDIR /app
 
-RUN apt-get update && apt-get install -y openssl \
-        libcurl4-openssl-dev \
-        libzip-dev \
-        libonig-dev \
-        libxml2-dev \
-        libicu-dev \
-        libfreetype6-dev \
-        libjpeg62-turbo-dev \
-        libpng-dev \
+WORKDIR /var/www/html
+
+RUN apt-get update && apt-get install -y \
     git \
-    unzip 
+    unzip \
+    libicu-dev \
+    libzip-dev \
+    && docker-php-ext-install \
+        pdo_mysql \
+        intl \
+        zip \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
-RUN docker-php-ext-install \
-    bcmath \
-    curl    \
-    intl \
-    gd \
-    json \
-    mbstring \
-    pdo_mysql \
-    tokenizer \
-    xml\
-    zip 
-
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
-
-
-COPY composer*.lock .
-COPY composer*.json .
-COPY package*.lock .
-COPY package*.json .
-
+COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
 COPY . .
 
-RUN composer install
+RUN composer install --no-dev --optimize-autoloader
 
-EXPOSE 9000
-CMD [ "php-fpm" ]
+CMD ["php-fpm"]
