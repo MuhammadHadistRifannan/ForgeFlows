@@ -1,10 +1,5 @@
 FROM php:8.2-fpm
 WORKDIR /app
-COPY . .
-
-COPY composer*.json .
-COPY composer*.lock .
-
 
 RUN apt-get update && apt-get install -y openssl \
         libcurl4-openssl-dev \ 
@@ -17,7 +12,6 @@ RUN apt-get update && apt-get install -y openssl \
         libpng-dev \
     git \
     unzip \ 
-    libzip-dev 
 
 RUN docker-php-ext-install \
     bcmath \
@@ -32,6 +26,13 @@ RUN docker-php-ext-install \
     zip 
 
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+
+
+COPY composer*.lock .
+COPY composer*.json .
+COPY package*.lock .
+COPY package*.json .
+
 
 COPY . .
 
