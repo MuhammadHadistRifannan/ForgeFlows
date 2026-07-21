@@ -1,6 +1,6 @@
 FROM php:8.2-fpm
 
-WORKDIR /var/www/html
+WORKDIR /app
 
 RUN apt-get update && apt-get install -y \
     git \
@@ -17,6 +17,8 @@ RUN apt-get update && apt-get install -y \
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
 COPY . .
+
+RUN chown -R www-data:www-data /app && chmod 777 /app
 
 RUN composer install --no-dev --optimize-autoloader
 
