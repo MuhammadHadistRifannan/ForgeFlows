@@ -11,7 +11,7 @@ RUN apt-get update && apt-get install -y openssl \
         libjpeg62-turbo-dev \
         libpng-dev \
     git \
-    unzip \ 
+    unzip 
 
 RUN docker-php-ext-install \
     bcmath \
