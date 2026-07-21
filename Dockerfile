@@ -5,6 +5,7 @@ COPY . .
 COPY composer*.json .
 COPY composer*.lock .
 
+
 RUN apt-get update && apt-get install -y openssl \
         libcurl4-openssl-dev \ 
         libzip-dev \
@@ -31,6 +32,8 @@ RUN docker-php-ext-install \
     zip 
 
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+
+COPY . .
 
 RUN composer install
 
