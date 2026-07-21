@@ -6,6 +6,14 @@ COPY composer*.json .
 COPY composer*.lock .
 
 RUN apt-get update && apt-get install -y openssl \
+        libcurl4-openssl-dev \ 
+        libzip-dev \
+        libonig-dev \
+        libxml2-dev \
+        libicu-dev \
+        libfreetype6-dev \
+        libjpeg62-turbo-dev \
+        libpng-dev \
     git \
     unzip \ 
     libzip-dev 
