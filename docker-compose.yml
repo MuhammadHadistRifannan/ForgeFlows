@@ -25,6 +25,7 @@ services:
 
     volumes:
       -  ./:/var/www/html
+      -  /home/project/ForgeFlows_Front:/var/www/app
       - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf
       -  /etc/letsencrypt/:/etc/letsencrypt
 
