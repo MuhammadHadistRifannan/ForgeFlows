@@ -89,8 +89,8 @@ jobs:
             sleep 4
 
             docker compose exec nginx nginx -t 
+            docker compose exec nginx mkdir /var/www/app 
             docker compose exec app composer install
-
             
             if ! grep -q "^APP_KEY=base64:" .env
             then

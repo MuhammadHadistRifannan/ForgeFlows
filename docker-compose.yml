@@ -23,6 +23,7 @@ services:
     ports:
       - "80:80"
 
+
     volumes:
       -  ./:/var/www/html
       -  /home/project/ForgeFlows_Front:/var/www/app
